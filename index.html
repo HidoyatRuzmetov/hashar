@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#e8f8ff">
+  <meta name="description" content="9-sinf ona tili uchun Hashar mavzusidagi interaktiv dars-sarguzasht.">
+  <title>Hashar sarguzashti</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2307a6a1'/%3E%3Cpath d='M18 45c12-2 18-13 22-28l8 4c-5 17-13 28-29 33z' fill='%23fff'/%3E%3Cpath d='M16 14h5v36h-5z' fill='%23ffc857' transform='rotate(-24 18.5 32)'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app" class="app">
+    <div class="sky-glow" aria-hidden="true"></div>
+    <header class="topbar">
+      <button class="brand" id="mapButton" type="button" aria-label="Hashar xaritasiga qaytish">
+        <span class="brand-mark">H</span>
+        <span><b>Hashar</b><small>sarguzashti</small></span>
+      </button>
+      <div class="lesson-meter" aria-label="Darsdagi siljish">
+        <span id="stageLabel">Boshlanish</span>
+        <div class="meter-track"><i id="meterFill"></i></div>
+        <b id="stageCount">0 / 7</b>
+      </div>
+      <div class="utility-bar">
+        <button id="soundButton" class="icon-button" type="button" aria-label="Ovozni o‘chirish" title="Ovoz">♫</button>
+        <button id="fullscreenButton" class="icon-button" type="button" aria-label="To‘liq ekran" title="To‘liq ekran">⛶</button>
+        <button id="helpButton" class="icon-button" type="button" aria-label="Boshqaruv yordamchisi" title="Yordam">?</button>
+      </div>
+    </header>
+
+    <main class="world" id="world">
+      <div class="world-bg morning" id="worldBg" aria-hidden="true"></div>
+      <div class="depth-haze" aria-hidden="true"></div>
+      <div class="leaves" aria-hidden="true"></div>
+
+      <section class="welcome" id="welcome" aria-labelledby="welcomeTitle">
+        <div class="welcome-card glass-card">
+          <span class="eyebrow">9-sinf • Ona tili</span>
+          <h1 id="welcomeTitle">Bir mahalla.<br><em>Birgalikdagi kuch.</em></h1>
+          <p>Bugun hikoyani o‘qiymiz, dalillarni topamiz, so‘zlarni saralaymiz va hasharni birgalikda yakunlaymiz.</p>
+          <div class="start-actions">
+            <button class="primary-button pulse" id="startButton" type="button"><span>Hasharni boshlaymiz</span><i>→</i></button>
+            <button class="text-button" id="aboutButton" type="button">Avval bir savol</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="journey" id="journey" aria-label="Dars xaritasi" hidden>
+        <div class="map-intro glass-card">
+          <span class="eyebrow">Bugungi yo‘l</span>
+          <h2 id="mapTitle">Hashar maydoni bizni kutmoqda</h2>
+          <p id="mapHint">Har bekatda bitta vazifa. Tayyor bo‘lsangiz, yoritilgan bekatni oching.</p>
+        </div>
+        <div class="path" aria-hidden="true"><span></span></div>
+        <nav class="stations" id="stations" aria-label="Dars bosqichlari"></nav>
+      </section>
+
+      <div class="robot-wrap" id="robotWrap" aria-hidden="true">
+        <div class="speech" id="speech">Assalomu alaykum! Men Hasharvoyman. Bugun hashar bilan mahallani, ona tili bilan tafakkurimizni obod qilamiz!</div>
+        <img class="robot" src="assets/hasharvoy.png" alt="Hasharvoy nomli quvnoq robot">
+        <div class="robot-shadow"></div>
+      </div>
+    </main>
+
+    <section class="activity-shell" id="activityShell" hidden aria-live="polite">
+      <div class="activity-backdrop"></div>
+      <article class="activity-panel" id="activityPanel">
+        <header class="activity-head">
+          <div>
+            <span class="activity-kicker" id="activityKicker">1-bekat</span>
+            <h2 id="activityTitle">Sarlavha</h2>
+          </div>
+          <div class="activity-tools">
+            <button class="timer-button" id="timerButton" type="button" title="Taymer"><span>◷</span><b id="timerText">01:00</b></button>
+            <button class="close-button" id="closeActivity" type="button" aria-label="Xaritaga qaytish">×</button>
+          </div>
+        </header>
+        <div class="activity-content" id="activityContent"></div>
+        <footer class="activity-footer">
+          <button class="secondary-button" id="backStep" type="button">← Ortga</button>
+          <div class="mini-progress" id="miniProgress"></div>
+          <button class="primary-button" id="nextStep" type="button"><span>Davom etamiz</span><i>→</i></button>
+        </footer>
+      </article>
+    </section>
+
+    <dialog class="dialog" id="infoDialog">
+      <button class="dialog-close" data-dialog-close type="button" aria-label="Yopish">×</button>
+      <span class="eyebrow">Suhbatni ochamiz</span>
+      <h2>Qadriyat nima?</h2>
+      <p>Avtobusda kattalarga joy berish — shunchaki odobmi yoki avloddan avlodga o‘tadigan qadriyatmi?</p>
+      <div class="discussion-prompt">
+        <b>Sinfga savol</b>
+        <span>Jamiyatda hamma amal qiladigan yana qaysi odatlarni qadriyat deb bilasiz?</span>
+      </div>
+      <button class="primary-button" data-dialog-close type="button"><span>Fikrlar tayyor</span><i>✓</i></button>
+    </dialog>
+
+    <dialog class="dialog help-dialog" id="helpDialog">
+      <button class="dialog-close" data-dialog-close type="button" aria-label="Yopish">×</button>
+      <span class="eyebrow">Boshqaruv</span>
+      <h2>Sinf bilan birga o‘ynang</h2>
+      <ul>
+        <li><kbd>→</kbd> yoki <kbd>Space</kbd> — keyingi qadam</li>
+        <li><kbd>←</kbd> — oldingi qadam</li>
+        <li><kbd>F</kbd> — to‘liq ekran</li>
+        <li><kbd>M</kbd> — ovozni yoqish yoki o‘chirish</li>
+        <li>Kartalarni sichqoncha yoki barmoq bilan sudrab tashlash mumkin.</li>
+      </ul>
+      <p class="small-note">Darsdagi natijalar faqat shu qurilmada saqlanadi. Hech qayerga ma’lumot yuborilmaydi.</p>
+      <button class="secondary-button reset-button" id="resetButton" type="button">Darsni boshidan boshlash</button>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <canvas id="confettiCanvas" aria-hidden="true"></canvas>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
